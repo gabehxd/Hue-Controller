@@ -13,14 +13,22 @@ namespace Hue_Controller
 
         private async void Button1_ClickAsync(object sender, EventArgs e)
         {
-            IEnumerable<LocatedBridge> Bridges = await new HttpBridgeLocator().LocateBridgesAsync(TimeSpan.FromSeconds(5));
+            UseWaitCursor = true;
+            IEnumerable<LocatedBridge> Enum = await new HttpBridgeLocator().LocateBridgesAsync(TimeSpan.FromSeconds(5));
+            LocatedBridge[] Bridges = Enum.ToArray();
             if (Bridges.Count() > 0)
             {
                 label1.Visible = false;
-                foreach (LocatedBridge item in Bridges)
-                    listView1.Columns.Add($"{item.BridgeId}: {item.IpAddress}", -2, HorizontalAlignment.Left);
+                List<string> list = new List<string>();
+                for (int i = 0; i < Bridges.Count(); i++)
+                {
+                    LocatedBridge item = Bridges[i];
+                    list.Add($"{item.BridgeId}: {item.IpAddress}");
+                }
+                richTextBox1.Lines = list.ToArray();
             }
             else label1.Visible = true;
+            UseWaitCursor = false;
         }
     }
 }

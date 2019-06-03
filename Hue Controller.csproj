@@ -103,6 +103,12 @@
     <Compile Include="BridgeFinder.Designer.cs">
       <DependentUpon>BridgeFinder.cs</DependentUpon>
     </Compile>
+    <Compile Include="LightFinder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LightFinder.Designer.cs">
+      <DependentUpon>LightFinder.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BridgeFinder.resx">
       <DependentUpon>BridgeFinder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LightFinder.resx">
+      <DependentUpon>LightFinder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

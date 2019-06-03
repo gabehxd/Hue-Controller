@@ -6,7 +6,10 @@ using Q42.HueApi.ColorConverters;
 using Q42.HueApi.ColorConverters.Gamut;
 using Q42.HueApi.ColorConverters.HSB;
 using Q42.HueApi.Interfaces;
+using System.Linq;
 using Cyotek.Windows.Forms;
+using Q42.HueApi.Models.Groups;
+using System.Collections.Generic;
 using Q42.HueApi.ColorConverters.Original;
 
 namespace Hue_Controller
@@ -22,8 +25,6 @@ namespace Hue_Controller
             BridgeFinder bridgeFinder = new BridgeFinder();
             bridgeFinder.Show();
         }
-
-        private void BrightnessBar_Scroll(object sender, EventArgs e) => BrightnessDisplay.Text = BrightnessBar.Value.ToString();
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -53,11 +54,13 @@ namespace Hue_Controller
             if (string.IsNullOrWhiteSpace(IPBox.Text))
             {
                 MessageBox.Show("Hue Bridge IP is empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             if (string.IsNullOrWhiteSpace(KeyBox.Text))
             {
                 MessageBox.Show("Hue Bridge key is empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             if (AlertType.SelectedItem == null)
@@ -81,21 +84,37 @@ namespace Hue_Controller
 
             LightCommand command = new LightCommand
             {
-                //Brightness will only ever be one byte here
-                Brightness = BitConverter.GetBytes(BrightnessBar.Value)[0],
                 On = isLightOn.Checked,
                 Alert = (Alert)AlertType.SelectedItem
             };
+
             if (!((Effect)EffectTypes.SelectedItem == Effect.ColorLoop)) command.SetColor(new RGBColor(Color.R, Color.G, Color.B));
             command.Effect = (Effect)EffectTypes.SelectedItem;
 
-            await client.SendCommandAsync(command);
+            var result = await client.SendCommandAsync(command);
+            IEnumerable<DefaultHueResult> Errors = result.Where(x => x.Error != null);
+            if (Errors.Count() != 0)
+            {
+                string errmsg = "Error(s) have occured";
+                foreach (DefaultHueResult ErrorResult in Errors)
+                {
+                    errmsg += $"{ErrorResult.Error.Address} {ErrorResult.Error.Description}\n";
+                }
+                MessageBox.Show(errmsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else MessageBox.Show("Success", "Lights Command", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
 
         private void EffectTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (EffectTypes.SelectedItem != null && (Effect)EffectTypes.SelectedItem == Effect.ColorLoop) ColorBtn.Enabled = false;
             else ColorBtn.Enabled = true;
+        }
+
+        private void LightFinderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LightFinder lightFinder = new LightFinder();
+            lightFinder.Show();
         }
     }
 }
