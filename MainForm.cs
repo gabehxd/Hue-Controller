@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Q42.HueApi;
 using Q42.HueApi.ColorConverters;
 using Q42.HueApi.ColorConverters.Gamut;
+using Newtonsoft.Json;
 using Q42.HueApi.ColorConverters.HSB;
 using Q42.HueApi.Interfaces;
 using System.Linq;
@@ -11,30 +12,42 @@ using Cyotek.Windows.Forms;
 using Q42.HueApi.Models.Groups;
 using System.Collections.Generic;
 using Q42.HueApi.ColorConverters.Original;
+using System.IO;
 
 namespace Hue_Controller
 {
     public partial class MainForm : Form
     {
         private Color Color;
+        private LightFinder LightFinder = new LightFinder();
+        private BridgeFinder BridgeFinder = new BridgeFinder();
+        public static readonly FileInfo ConfigFile = new FileInfo("Config.Json");
 
         public MainForm() => InitializeComponent();
 
         private void BridgeFinderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BridgeFinder bridgeFinder = new BridgeFinder();
-            bridgeFinder.Show();
+            if (BridgeFinder.IsDisposed) BridgeFinder = new BridgeFinder();
+            BridgeFinder.Show();
+            BridgeFinder.Activate();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Config cfg = new Config(Color.White);
+            if (JsonConvert.DeserializeObject(File.ReadAllText(ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
+
             foreach (object item in Enum.GetValues(typeof(Alert)))
                 AlertType.Items.Add(item);
-            AlertType.SelectedIndex = 0;
+            AlertType.SelectedItem = cfg.Alert;
 
             foreach (object item in Enum.GetValues(typeof(Effect)))
-                EffectTypes.Items.Add(item);
-            EffectTypes.SelectedIndex = 0;
+                EffectType.Items.Add(item);
+            EffectType.SelectedItem = cfg.Effect;
+
+            isLightOn.Checked = cfg.On;
+            KeyBox.Text = cfg.Key;
+            IPBox.Text = cfg.IP;
         }
 
         private void ColorBtn_Click(object sender, EventArgs e)
@@ -68,7 +81,7 @@ namespace Hue_Controller
                 MessageBox.Show("Alert type not selected/not valid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (EffectTypes.SelectedItem == null)
+            if (EffectType.SelectedItem == null)
             {
                 MessageBox.Show("Effect type not selected/not valid!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -88,33 +101,56 @@ namespace Hue_Controller
                 Alert = (Alert)AlertType.SelectedItem
             };
 
-            if (!((Effect)EffectTypes.SelectedItem == Effect.ColorLoop)) command.SetColor(new RGBColor(Color.R, Color.G, Color.B));
-            command.Effect = (Effect)EffectTypes.SelectedItem;
+            if (!((Effect)EffectType.SelectedItem == Effect.ColorLoop)) command.SetColor(new RGBColor(Color.R, Color.G, Color.B));
+            command.Effect = (Effect)EffectType.SelectedItem;
 
             var result = await client.SendCommandAsync(command);
             IEnumerable<DefaultHueResult> Errors = result.Where(x => x.Error != null);
             if (Errors.Count() != 0)
             {
-                string errmsg = "Error(s) have occured";
+                string errmsg = "Error(s) have occured\n";
                 foreach (DefaultHueResult ErrorResult in Errors)
-                {
                     errmsg += $"{ErrorResult.Error.Address} {ErrorResult.Error.Description}\n";
-                }
+
                 MessageBox.Show(errmsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("Success", "Lights Command", MessageBoxButtons.OK, MessageBoxIcon.None);
+            else
+            {
+                MessageBox.Show("Success", "Lights Command", MessageBoxButtons.OK, MessageBoxIcon.None);
+                JsonConvert.SerializeObject(new Config(Color, IPBox.Text, KeyBox.Text, isLightOn.Checked, (Alert)AlertType.SelectedItem, (Effect)EffectType.SelectedItem));
+            }
         }
 
         private void EffectTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (EffectTypes.SelectedItem != null && (Effect)EffectTypes.SelectedItem == Effect.ColorLoop) ColorBtn.Enabled = false;
+            if (EffectType.SelectedItem != null && (Effect)EffectType.SelectedItem == Effect.ColorLoop) ColorBtn.Enabled = false;
             else ColorBtn.Enabled = true;
         }
 
         private void LightFinderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LightFinder lightFinder = new LightFinder();
-            lightFinder.Show();
+            if (LightFinder.IsDisposed) LightFinder = new LightFinder();
+            LightFinder.Show();
+            LightFinder.Activate();
+        }
+    }
+    public class Config
+    {
+        public string IP;
+        public string Key;
+        public bool On;
+        public Alert Alert;
+        public Effect Effect;
+        public Color Color;
+
+        public Config(Color Selected, string address = "", string code = "", bool status = true, Alert AlertType = Alert.None, Effect EffectType = Effect.None)
+        {
+            IP = address;
+            Key = code;
+            On = status;
+            Alert = AlertType;
+            Effect = EffectType;
+            Color = Selected;
         }
     }
 }
