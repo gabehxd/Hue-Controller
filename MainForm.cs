@@ -1,18 +1,18 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using Cyotek.Windows.Forms;
+using Newtonsoft.Json;
 using Q42.HueApi;
 using Q42.HueApi.ColorConverters;
 using Q42.HueApi.ColorConverters.Gamut;
-using Newtonsoft.Json;
 using Q42.HueApi.ColorConverters.HSB;
-using Q42.HueApi.Interfaces;
-using System.Linq;
-using Cyotek.Windows.Forms;
-using Q42.HueApi.Models.Groups;
-using System.Collections.Generic;
 using Q42.HueApi.ColorConverters.Original;
+using Q42.HueApi.Interfaces;
+using Q42.HueApi.Models.Groups;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Hue_Controller
 {
@@ -48,11 +48,17 @@ namespace Hue_Controller
             isLightOn.Checked = cfg.On;
             KeyBox.Text = cfg.Key;
             IPBox.Text = cfg.IP;
+            Color = cfg.Color;
+            ColorBtn.BackColor = cfg.Color;
+            Selected.Text = cfg.Selected;
         }
 
         private void ColorBtn_Click(object sender, EventArgs e)
         {
-            ColorPickerDialog picker = new ColorPickerDialog();
+            ColorPickerDialog picker = new ColorPickerDialog
+            {
+                Color = Color
+            };
 
             if (picker.ShowDialog() == DialogResult.OK)
             {
@@ -104,7 +110,22 @@ namespace Hue_Controller
             if (!((Effect)EffectType.SelectedItem == Effect.ColorLoop)) command.SetColor(new RGBColor(Color.R, Color.G, Color.B));
             command.Effect = (Effect)EffectType.SelectedItem;
 
-            HueResults result = await client.SendCommandAsync(command);
+            HueResults result;
+            if (string.IsNullOrWhiteSpace(Selected.Text))
+            {
+                result = await client.SendCommandAsync(command);
+            }
+            else
+            {
+                IEnumerable<Light> lights;
+                if (Selected.Text.Contains("!"))
+                {
+                    lights = await client.GetLightsAsync();
+                }
+                //TODO: actually do it
+                result = await client.SendCommandAsync(command, Selected.Text.Where(x => x.));
+            }
+
             IEnumerable<DefaultHueResult> Errors = result.Where(x => x.Error != null);
             if (Errors.Count() != 0)
             {
@@ -150,6 +171,7 @@ namespace Hue_Controller
         public Alert Alert;
         public Effect Effect;
         public Color Color;
+        public string Selected;
 
         public Config()
         {
@@ -159,6 +181,7 @@ namespace Hue_Controller
             Alert = Alert.None;
             Effect = Effect.None;
             Color = Color.White;
+            Selected = string.Empty;
         }
     }
 }

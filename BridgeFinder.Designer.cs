@@ -40,9 +40,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(109, 410);
+            this.button1.Location = new System.Drawing.Point(145, 505);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 1;
             this.button1.Text = "Find";
             this.button1.UseVisualStyleBackColor = true;
@@ -51,20 +52,22 @@
             // richTextBox1
             // 
             this.richTextBox1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.richTextBox1.Location = new System.Drawing.Point(8, 26);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
+            this.richTextBox1.Location = new System.Drawing.Point(11, 32);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(276, 366);
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(367, 450);
             this.richTextBox1.TabIndex = 4;
             this.richTextBox1.Text = "";
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.uToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(293, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(391, 28);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -73,14 +76,14 @@
             this.uToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveTextToFileToolStripMenuItem});
             this.uToolStripMenuItem.Name = "uToolStripMenuItem";
-            this.uToolStripMenuItem.Size = new System.Drawing.Size(51, 20);
+            this.uToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.uToolStripMenuItem.Text = "Utilies";
             // 
             // saveTextToFileToolStripMenuItem
             // 
             this.saveTextToFileToolStripMenuItem.Name = "saveTextToFileToolStripMenuItem";
             this.saveTextToFileToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveTextToFileToolStripMenuItem.Size = new System.Drawing.Size(193, 22);
+            this.saveTextToFileToolStripMenuItem.Size = new System.Drawing.Size(245, 26);
             this.saveTextToFileToolStripMenuItem.Text = "Save text to file";
             this.saveTextToFileToolStripMenuItem.Click += new System.EventHandler(this.SaveTextToFileToolStripMenuItem_Click);
             // 
@@ -92,14 +95,15 @@
             // 
             // BridgeFinder
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(293, 450);
+            this.ClientSize = new System.Drawing.Size(391, 554);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BridgeFinder";

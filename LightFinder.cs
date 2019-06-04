@@ -30,12 +30,14 @@ namespace Hue_Controller
             if (string.IsNullOrWhiteSpace(bridgeIP_Box.Text))
             {
                 MessageBox.Show("Hue Bridge IP is empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UseWaitCursor = false;
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(bridgePass_Box.Text))
             {
                 MessageBox.Show("Hue Bridge key is empty!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UseWaitCursor = false;
                 return;
             }
 
@@ -44,6 +46,7 @@ namespace Hue_Controller
             if (!await client.CheckConnection())
             {
                 MessageBox.Show("Bridge conntection test failed!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UseWaitCursor = false;
                 return;
             }
             IEnumerable<Light> Lights = await client.GetLightsAsync();
@@ -66,12 +69,14 @@ namespace Hue_Controller
                 catch (InvalidOperationException)
                 {
                     MessageBox.Show("A light with that ID was not found!", "Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    UseWaitCursor = false;
                     return;
                 }
                 //Just in case
                 if (light == null)
                 {
                     MessageBox.Show("A light with that ID was not found!", "Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    UseWaitCursor = false;
                     return;
                 }
 
@@ -89,7 +94,7 @@ namespace Hue_Controller
                     $"Type: {light.Type}",
                     $"SW Config ID: {light.SwConfigId}",
                     $"SW Update State: {light.SwUpdate.State}",
-                    $"Last SW Update Time: {light.SwUpdate.Lastinstall.Value}",
+                    $"Last SW Update Time: {light.SwUpdate.Lastinstall}",
                     string.Empty,
                     "Config:",
                     $"Arche Type: {light.Config.ArcheType}",
@@ -97,22 +102,24 @@ namespace Hue_Controller
                     $"Function: {light.Config.Function}",
                     string.Empty,
                     "Startup:",
-                    $"Configured: {light.Config.Startup.Configured.Value}",
-                    $"Mode: {light.Config.Startup.Mode.Value}",
+                    $"Configured: {light.Config.Startup.Configured}",
+                    $"Mode: {light.Config.Startup.Mode}",
                     string.Empty,
                     "State:",
                     $"On: {light.State.On}",
                     $"Brightness: {light.State.Brightness}",
-                    $"Hue: {light.State.Hue.Value}",
-                    $"Saturation: {light.State.Saturation.Value}",
+                    $"Hue: {light.State.Hue}",
+                    $"Saturation: {light.State.Saturation}",
                     $"Color Mode: {light.State.ColorMode}",
                     $"Alert: {light.State.Alert}",
-                    $"Effect: {light.State.Effect.Value}",
-                    $"Color Temperature: {light.State.ColorTemperature.Value}",
+                    $"Effect: {light.State.Effect}",
+                    $"Color Temperature: {light.State.ColorTemperature}",
                     //I'm almost certain there is only 2 coords
                     $"Color Coordinates: X: {light.State.ColorCoordinates[0]}, Y: {light.State.ColorCoordinates[1]}",
-                    $"Transition Time: {light.State.TransitionTime.Value}",
-                    $"Is Reachable: {light.State.IsReachable.Value}"
+                    $"Transition Time: {light.State.TransitionTime}",
+                    $"Is Reachable: {light.State.IsReachable}",
+                    string.Empty
+                    //we want correct LEs
                 };
             }
             UseWaitCursor = false;
