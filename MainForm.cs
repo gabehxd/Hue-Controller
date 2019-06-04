@@ -34,7 +34,7 @@ namespace Hue_Controller
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Config cfg = new Config(Color.White);
+            Config cfg = new Config();
             if (ConfigFile.Exists && JsonConvert.DeserializeObject(File.ReadAllText(ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
 
             foreach (object item in Enum.GetValues(typeof(Alert)))
@@ -117,7 +117,7 @@ namespace Hue_Controller
             else
             {
                 MessageBox.Show("Success", "Lights Command", MessageBoxButtons.OK, MessageBoxIcon.None);
-                JsonConvert.SerializeObject(new Config(Color, IPBox.Text, KeyBox.Text, isLightOn.Checked, (Alert)AlertType.SelectedItem, (Effect)EffectType.SelectedItem));
+                JsonConvert.SerializeObject(new Config(IPBox.Text, KeyBox.Text, isLightOn.Checked, (Alert)AlertType.SelectedItem, (Effect)EffectType.SelectedItem, Color));
             }
         }
 
@@ -143,7 +143,7 @@ namespace Hue_Controller
         public Effect Effect;
         public Color Color;
 
-        public Config(Color Selected, string address = "", string code = "", bool status = true, Alert AlertType = Alert.None, Effect EffectType = Effect.None)
+        public Config(string address, string code, bool status, Alert AlertType, Effect EffectType, Color Selected)
         {
             IP = address;
             Key = code;
@@ -151,6 +151,16 @@ namespace Hue_Controller
             Alert = AlertType;
             Effect = EffectType;
             Color = Selected;
+        }
+
+        public Config()
+        {
+            IP = "";
+            Key = "";
+            On = true;
+            Alert = Alert.None;
+            Effect = Effect.None;
+            Color = Color.White;
         }
     }
 }
