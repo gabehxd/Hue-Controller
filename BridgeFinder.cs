@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.IO;
 using Q42.HueApi.Models.Bridge;
 
 namespace Hue_Controller
@@ -11,6 +12,16 @@ namespace Hue_Controller
     {
         public BridgeFinder() => InitializeComponent();
 
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.Escape)
+            {
+                Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
         private async void Button1_ClickAsync(object sender, EventArgs e)
         {
             UseWaitCursor = true;
@@ -18,7 +29,6 @@ namespace Hue_Controller
             LocatedBridge[] Bridges = Enum.ToArray();
             if (Bridges.Count() > 0)
             {
-                label1.Visible = false;
                 List<string> list = new List<string>();
                 for (int i = 0; i < Bridges.Count(); i++)
                 {
@@ -27,8 +37,17 @@ namespace Hue_Controller
                 }
                 richTextBox1.Lines = list.ToArray();
             }
-            else label1.Visible = true;
+            else MessageBox.Show("No bridges found!", "Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             UseWaitCursor = false;
+        }
+
+        private void SaveTextToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.ShowDialog();
+            if (saveFileDialog1.FileName != "")
+            {
+                File.WriteAllText(saveFileDialog1.FileName, richTextBox1.Text);
+            }
         }
     }
 }

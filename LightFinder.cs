@@ -16,9 +16,17 @@ namespace Hue_Controller
 {
     public partial class LightFinder : Form
     {
-        public LightFinder()
+        public LightFinder() => InitializeComponent();
+
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            InitializeComponent();
+            if (keyData == Keys.Escape)
+            {
+                Close();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private async void Button1_ClickAsync(object sender, EventArgs e)
@@ -87,16 +95,16 @@ namespace Hue_Controller
                     $"SW Config ID: {light.SwConfigId}",
                     $"SW Update State: {light.SwUpdate.State}",
                     $"Last SW Update Time: {light.SwUpdate.Lastinstall.Value}",
-                    "",
+                    string.Empty,
                     "Config:",
                     $"Arche Type: {light.Config.ArcheType}",
                     $"Direction: {light.Config.Direction}",
                     $"Function: {light.Config.Function}",
-                    "",
+                    string.Empty,
                     "Startup:",
                     $"Configured: {light.Config.Startup.Configured.Value}",
                     $"Mode: {light.Config.Startup.Mode.Value}",
-                    "",
+                    string.Empty,
                     "State:",
                     $"On: {light.State.On}",
                     $"Brightness: {light.State.Brightness}",
@@ -121,6 +129,15 @@ namespace Hue_Controller
             if (MainForm.ConfigFile.Exists && JsonConvert.DeserializeObject(File.ReadAllText(MainForm.ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
             bridgeIP_Box.Text = cfg.IP;
             bridgePass_Box.Text = cfg.Key;
+        }
+
+        private void SaveTextToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.ShowDialog();
+            if (saveFileDialog1.FileName != "")
+            {
+                File.WriteAllText(saveFileDialog1.FileName, richTextBox1.Text);
+            }
         }
     }
 }
