@@ -117,7 +117,15 @@ namespace Hue_Controller
             else
             {
                 MessageBox.Show("Success", "Lights Command", MessageBoxButtons.OK, MessageBoxIcon.None);
-                JsonConvert.SerializeObject(new Config(IPBox.Text, KeyBox.Text, isLightOn.Checked, (Alert)AlertType.SelectedItem, (Effect)EffectType.SelectedItem, Color));
+                File.WriteAllText(ConfigFile.FullName, JsonConvert.SerializeObject(new Config()
+                {
+                    On = isLightOn.Checked,
+                    Key = KeyBox.Text,
+                    Alert = (Alert)AlertType.SelectedItem,
+                    Color = Color,
+                    Effect = (Effect)EffectType.SelectedItem,
+                    IP = IPBox.Text
+                }));
             }
         }
 
@@ -143,20 +151,10 @@ namespace Hue_Controller
         public Effect Effect;
         public Color Color;
 
-        public Config(string address, string code, bool status, Alert AlertType, Effect EffectType, Color Selected)
-        {
-            IP = address;
-            Key = code;
-            On = status;
-            Alert = AlertType;
-            Effect = EffectType;
-            Color = Selected;
-        }
-
         public Config()
         {
-            IP = "";
-            Key = "";
+            IP = string.Empty;
+            Key = string.Empty;
             On = true;
             Alert = Alert.None;
             Effect = Effect.None;

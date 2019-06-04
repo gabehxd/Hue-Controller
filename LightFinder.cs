@@ -117,7 +117,6 @@ namespace Hue_Controller
 
         private void Form_Load(object sender, EventArgs e)
         {
-            //Config constructor always needs some color
             Config cfg = new Config();
             if (MainForm.ConfigFile.Exists && JsonConvert.DeserializeObject(File.ReadAllText(MainForm.ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
             bridgeIP_Box.Text = cfg.IP;
