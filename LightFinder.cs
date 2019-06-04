@@ -73,7 +73,8 @@ namespace Hue_Controller
                 }
 
                 //T R A S H
-                richTextBox1.Lines = new string[] {
+                richTextBox1.Lines = new string[]
+                {
                     "General Info:",
                     $"Name: {light.Name}",
                     $"ID: {light.Id}",
@@ -84,7 +85,8 @@ namespace Hue_Controller
                     $"Software Version Name: {light.SoftwareVersion}",
                     $"Type: {light.Type}",
                     $"SW Config ID: {light.SwConfigId}",
-                    $"SW Update: {light.SwUpdate}",
+                    $"SW Update State: {light.SwUpdate.State}",
+                    $"Last SW Update Time: {light.SwUpdate.Lastinstall.Value}",
                     "",
                     "Config:",
                     $"Arche Type: {light.Config.ArcheType}",
@@ -92,21 +94,22 @@ namespace Hue_Controller
                     $"Function: {light.Config.Function}",
                     "",
                     "Startup:",
-                    $"Configured: {light.Config.Startup.Configured}",
-                    $"Mode: {light.Config.Startup.Mode}",
+                    $"Configured: {light.Config.Startup.Configured.Value}",
+                    $"Mode: {light.Config.Startup.Mode.Value}",
                     "",
                     "State:",
                     $"On: {light.State.On}",
                     $"Brightness: {light.State.Brightness}",
-                    $"Hue: {light.State.Hue}",
-                    $"Saturation: {light.State.Saturation}",
+                    $"Hue: {light.State.Hue.Value}",
+                    $"Saturation: {light.State.Saturation.Value}",
                     $"Color Mode: {light.State.ColorMode}",
                     $"Alert: {light.State.Alert}",
-                    $"Effect: {light.State.Effect}",
-                    $"Color Temperature: {light.State.ColorTemperature}",
-                    $"Color Coordinates: {light.State.ColorCoordinates}",
-                    $"Transition Time: {light.State.TransitionTime}",
-                    $"Is Reachable: {light.State.IsReachable}"
+                    $"Effect: {light.State.Effect.Value}",
+                    $"Color Temperature: {light.State.ColorTemperature.Value}",
+                    //I'm almost certain there is only 2 coords
+                    $"Color Coordinates: X: {light.State.ColorCoordinates[0]}, Y: {light.State.ColorCoordinates[1]}",
+                    $"Transition Time: {light.State.TransitionTime.Value}",
+                    $"Is Reachable: {light.State.IsReachable.Value}"
                 };
             }
             UseWaitCursor = false;

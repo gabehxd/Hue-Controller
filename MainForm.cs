@@ -104,13 +104,13 @@ namespace Hue_Controller
             if (!((Effect)EffectType.SelectedItem == Effect.ColorLoop)) command.SetColor(new RGBColor(Color.R, Color.G, Color.B));
             command.Effect = (Effect)EffectType.SelectedItem;
 
-            var result = await client.SendCommandAsync(command);
+            HueResults result = await client.SendCommandAsync(command);
             IEnumerable<DefaultHueResult> Errors = result.Where(x => x.Error != null);
             if (Errors.Count() != 0)
             {
                 string errmsg = "Error(s) have occured\n";
                 foreach (DefaultHueResult ErrorResult in Errors)
-                    errmsg += $"{ErrorResult.Error.Address} {ErrorResult.Error.Description}\n";
+                    errmsg += $"{ErrorResult.Error.Address}: {ErrorResult.Error.Description}\n";
 
                 MessageBox.Show(errmsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
