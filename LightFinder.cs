@@ -116,7 +116,7 @@ namespace Hue_Controller
         {
             //Config constructor always needs some color
             Config cfg = new Config(Color.White);
-            if (JsonConvert.DeserializeObject(File.ReadAllText(MainForm.ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
+            if (MainForm.ConfigFile.Exists && JsonConvert.DeserializeObject(File.ReadAllText(MainForm.ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
             bridgeIP_Box.Text = cfg.IP;
             bridgePass_Box.Text = cfg.Key;
         }

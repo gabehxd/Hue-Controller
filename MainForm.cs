@@ -35,7 +35,7 @@ namespace Hue_Controller
         private void MainForm_Load(object sender, EventArgs e)
         {
             Config cfg = new Config(Color.White);
-            if (JsonConvert.DeserializeObject(File.ReadAllText(ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
+            if (ConfigFile.Exists && JsonConvert.DeserializeObject(File.ReadAllText(ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
 
             foreach (object item in Enum.GetValues(typeof(Alert)))
                 AlertType.Items.Add(item);
