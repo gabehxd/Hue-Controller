@@ -112,7 +112,7 @@ namespace Hue_Controller
                 command.Effect = (Effect)EffectType.SelectedItem;
                 command.Alert = (Alert)AlertType.SelectedItem;
             }
-
+            
             HueResults result;
             if (string.IsNullOrWhiteSpace(Selected.Text))
             {
@@ -122,14 +122,15 @@ namespace Hue_Controller
             {
                 if (Selected.Text.Contains("!"))
                 {
-                    List<string> Lights = new List<string>();
-                    foreach (Light light in await client.GetLightsAsync())
-                        Lights.Add(light.Id);
-
-                    foreach (string light in Selected.Text.Split(' '))
-                        Lights = Lights.Where(x => x != light).ToList();
-
-                    result = await client.SendCommandAsync(command, Lights);
+                    if (!Selected.Text.Split(' ').All(x => x.StartsWith("!")))
+                    {
+                        MessageBox.Show("Invalid Light selection (not all lights started with '!') ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    IEnumerable<Light> lights = await client.GetLightsAsync();
+                    string[] requestedIds = Selected.Text.Split(' ');
+                    IEnumerable<Light> requestedLights = lights.Where(l => requestedIds.Contains(l.Id));
+                    result = await client.SendCommandAsync(command, requestedLights.Select(l => l.Id).ToArray());
                 }
                 else result = await client.SendCommandAsync(command, Selected.Text.Split(' '));
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.ulitiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +47,7 @@
             this.SendCommand = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.Selected = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,14 +75,14 @@
             // bridgeFinderToolStripMenuItem
             // 
             this.bridgeFinderToolStripMenuItem.Name = "bridgeFinderToolStripMenuItem";
-            this.bridgeFinderToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.bridgeFinderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.bridgeFinderToolStripMenuItem.Text = "Bridge Finder";
             this.bridgeFinderToolStripMenuItem.Click += new System.EventHandler(this.BridgeFinderToolStripMenuItem_Click);
             // 
             // lightFinderToolStripMenuItem
             // 
             this.lightFinderToolStripMenuItem.Name = "lightFinderToolStripMenuItem";
-            this.lightFinderToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.lightFinderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lightFinderToolStripMenuItem.Text = "Light Finder";
             this.lightFinderToolStripMenuItem.Click += new System.EventHandler(this.LightFinderToolStripMenuItem_Click);
             // 
@@ -94,7 +96,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(138, 38);
+            this.label1.Location = new System.Drawing.Point(137, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 2;
@@ -105,7 +107,7 @@
             this.isLightOn.AutoSize = true;
             this.isLightOn.Checked = true;
             this.isLightOn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.isLightOn.Location = new System.Drawing.Point(144, 240);
+            this.isLightOn.Location = new System.Drawing.Point(142, 246);
             this.isLightOn.Name = "isLightOn";
             this.isLightOn.Size = new System.Drawing.Size(40, 17);
             this.isLightOn.TabIndex = 4;
@@ -116,7 +118,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(134, 109);
+            this.label2.Location = new System.Drawing.Point(133, 108);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 6;
@@ -124,7 +126,7 @@
             // 
             // KeyBox
             // 
-            this.KeyBox.Location = new System.Drawing.Point(89, 141);
+            this.KeyBox.Location = new System.Drawing.Point(89, 139);
             this.KeyBox.Name = "KeyBox";
             this.KeyBox.PasswordChar = '*';
             this.KeyBox.Size = new System.Drawing.Size(147, 20);
@@ -133,7 +135,7 @@
             // AlertType
             // 
             this.AlertType.FormattingEnabled = true;
-            this.AlertType.Location = new System.Drawing.Point(102, 308);
+            this.AlertType.Location = new System.Drawing.Point(102, 312);
             this.AlertType.Name = "AlertType";
             this.AlertType.Size = new System.Drawing.Size(121, 21);
             this.AlertType.TabIndex = 11;
@@ -141,7 +143,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(135, 276);
+            this.label6.Location = new System.Drawing.Point(135, 281);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(55, 13);
             this.label6.TabIndex = 12;
@@ -149,7 +151,7 @@
             // 
             // ColorBtn
             // 
-            this.ColorBtn.Location = new System.Drawing.Point(124, 420);
+            this.ColorBtn.Location = new System.Drawing.Point(125, 421);
             this.ColorBtn.Name = "ColorBtn";
             this.ColorBtn.Size = new System.Drawing.Size(75, 23);
             this.ColorBtn.TabIndex = 13;
@@ -160,7 +162,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(132, 348);
+            this.label7.Location = new System.Drawing.Point(131, 351);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(62, 13);
             this.label7.TabIndex = 15;
@@ -169,7 +171,7 @@
             // EffectType
             // 
             this.EffectType.FormattingEnabled = true;
-            this.EffectType.Location = new System.Drawing.Point(102, 380);
+            this.EffectType.Location = new System.Drawing.Point(102, 382);
             this.EffectType.Name = "EffectType";
             this.EffectType.Size = new System.Drawing.Size(121, 21);
             this.EffectType.TabIndex = 14;
@@ -177,7 +179,7 @@
             // 
             // SendCommand
             // 
-            this.SendCommand.Location = new System.Drawing.Point(124, 462);
+            this.SendCommand.Location = new System.Drawing.Point(125, 462);
             this.SendCommand.Name = "SendCommand";
             this.SendCommand.Size = new System.Drawing.Size(75, 23);
             this.SendCommand.TabIndex = 16;
@@ -188,18 +190,25 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(98, 172);
+            this.label3.Location = new System.Drawing.Point(86, 177);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(152, 13);
+            this.label3.Size = new System.Drawing.Size(153, 13);
             this.label3.TabIndex = 18;
-            this.label3.Text = "Lights to (not) control (optional)";
+            this.label3.Text = "Lights to (not) Control (optional)";
             // 
             // Selected
             // 
-            this.Selected.Location = new System.Drawing.Point(89, 205);
+            this.Selected.Location = new System.Drawing.Point(89, 208);
             this.Selected.Name = "Selected";
             this.Selected.Size = new System.Drawing.Size(147, 20);
             this.Selected.TabIndex = 17;
+            this.toolTip1.SetToolTip(this.Selected, "Example: \"1 2 3 6 9\" Add \'!\' to the start of the number to ignore it");
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.AutoPopDelay = 5000;
+            this.toolTip1.InitialDelay = 200;
+            this.toolTip1.ReshowDelay = 100;
             // 
             // MainForm
             // 
@@ -253,6 +262,7 @@
         private System.Windows.Forms.TextBox KeyBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox Selected;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

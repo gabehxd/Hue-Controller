@@ -25,18 +25,9 @@ namespace Hue_Controller
         private async void Button1_ClickAsync(object sender, EventArgs e)
         {
             UseWaitCursor = true;
-            IEnumerable<LocatedBridge> Enum = await new HttpBridgeLocator().LocateBridgesAsync(TimeSpan.FromSeconds(5));
-            LocatedBridge[] Bridges = Enum.ToArray();
-            if (Bridges.Count() > 0)
-            {
-                List<string> list = new List<string>();
-                for (int i = 0; i < Bridges.Count(); i++)
-                {
-                    LocatedBridge item = Bridges[i];
-                    list.Add($"{item.BridgeId}: {item.IpAddress}");
-                }
-                richTextBox1.Lines = list.ToArray();
-            }
+            IEnumerable<LocatedBridge> Bridges = await new HttpBridgeLocator().LocateBridgesAsync(TimeSpan.FromSeconds(5));
+
+            if (Bridges.Count() > 0) richTextBox1.Lines = Bridges.Select(b => $"{b.BridgeId}: {b.IpAddress}").ToArray();
             else MessageBox.Show("No bridges found!", "Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             UseWaitCursor = false;
         }
