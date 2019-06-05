@@ -57,19 +57,12 @@ namespace Hue_Controller
             }
             else
             {
-                Light light = null;
+                Light light;
                 try
                 {
                     light = Lights.Single(x => x.Id == textBox1.Text);
                 }
                 catch (InvalidOperationException)
-                {
-                    MessageBox.Show("A light with that ID was not found!", "Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    UseWaitCursor = false;
-                    return;
-                }
-                //Just in case
-                if (light == null)
                 {
                     MessageBox.Show("A light with that ID was not found!", "Not Found!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     UseWaitCursor = false;
