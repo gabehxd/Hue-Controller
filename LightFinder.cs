@@ -53,11 +53,7 @@ namespace Hue_Controller
 
             if (string.IsNullOrWhiteSpace(textBox1.Text))
             {
-                List<string> list = new List<string>();
-                foreach (Light light in Lights)
-                    list.Add($"{light.Id}: {light.Name}");
-
-                richTextBox1.Lines = list.ToArray();
+                richTextBox1.Lines = Lights.Select(l => $"{l.Id}: {l.Name}").ToArray();
             }
             else
             {
