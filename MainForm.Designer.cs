@@ -56,8 +56,8 @@
             this.ulitiesToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(433, 30);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(325, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -67,38 +67,36 @@
             this.bridgeFinderToolStripMenuItem,
             this.lightFinderToolStripMenuItem});
             this.ulitiesToolStripMenuItem.Name = "ulitiesToolStripMenuItem";
-            this.ulitiesToolStripMenuItem.Size = new System.Drawing.Size(73, 26);
+            this.ulitiesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.ulitiesToolStripMenuItem.Text = "Utilities";
             // 
             // bridgeFinderToolStripMenuItem
             // 
             this.bridgeFinderToolStripMenuItem.Name = "bridgeFinderToolStripMenuItem";
-            this.bridgeFinderToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.bridgeFinderToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.bridgeFinderToolStripMenuItem.Text = "Bridge Finder";
             this.bridgeFinderToolStripMenuItem.Click += new System.EventHandler(this.BridgeFinderToolStripMenuItem_Click);
             // 
             // lightFinderToolStripMenuItem
             // 
             this.lightFinderToolStripMenuItem.Name = "lightFinderToolStripMenuItem";
-            this.lightFinderToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.lightFinderToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.lightFinderToolStripMenuItem.Text = "Light Finder";
             this.lightFinderToolStripMenuItem.Click += new System.EventHandler(this.LightFinderToolStripMenuItem_Click);
             // 
             // IPBox
             // 
-            this.IPBox.Location = new System.Drawing.Point(136, 86);
-            this.IPBox.Margin = new System.Windows.Forms.Padding(4);
+            this.IPBox.Location = new System.Drawing.Point(102, 70);
             this.IPBox.Name = "IPBox";
-            this.IPBox.Size = new System.Drawing.Size(160, 22);
+            this.IPBox.Size = new System.Drawing.Size(121, 20);
             this.IPBox.TabIndex = 1;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(184, 47);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(138, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 17);
+            this.label1.Size = new System.Drawing.Size(50, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Bridge IP";
             // 
@@ -107,58 +105,53 @@
             this.isLightOn.AutoSize = true;
             this.isLightOn.Checked = true;
             this.isLightOn.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.isLightOn.Location = new System.Drawing.Point(192, 296);
-            this.isLightOn.Margin = new System.Windows.Forms.Padding(4);
+            this.isLightOn.Location = new System.Drawing.Point(144, 240);
             this.isLightOn.Name = "isLightOn";
-            this.isLightOn.Size = new System.Drawing.Size(49, 21);
+            this.isLightOn.Size = new System.Drawing.Size(40, 17);
             this.isLightOn.TabIndex = 4;
             this.isLightOn.Text = "On";
             this.isLightOn.UseVisualStyleBackColor = true;
+            this.isLightOn.CheckedChanged += new System.EventHandler(this.IsLightOn_CheckedChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(178, 134);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(134, 109);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 17);
+            this.label2.Size = new System.Drawing.Size(58, 13);
             this.label2.TabIndex = 6;
             this.label2.Text = "Bridge Key";
             // 
             // KeyBox
             // 
-            this.KeyBox.Location = new System.Drawing.Point(119, 174);
-            this.KeyBox.Margin = new System.Windows.Forms.Padding(4);
+            this.KeyBox.Location = new System.Drawing.Point(89, 141);
             this.KeyBox.Name = "KeyBox";
             this.KeyBox.PasswordChar = '*';
-            this.KeyBox.Size = new System.Drawing.Size(195, 22);
+            this.KeyBox.Size = new System.Drawing.Size(147, 20);
             this.KeyBox.TabIndex = 5;
             // 
             // AlertType
             // 
             this.AlertType.FormattingEnabled = true;
-            this.AlertType.Location = new System.Drawing.Point(136, 379);
-            this.AlertType.Margin = new System.Windows.Forms.Padding(4);
+            this.AlertType.Location = new System.Drawing.Point(102, 308);
             this.AlertType.Name = "AlertType";
-            this.AlertType.Size = new System.Drawing.Size(160, 24);
+            this.AlertType.Size = new System.Drawing.Size(121, 21);
             this.AlertType.TabIndex = 11;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(180, 340);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(135, 276);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(73, 17);
+            this.label6.Size = new System.Drawing.Size(55, 13);
             this.label6.TabIndex = 12;
             this.label6.Text = "Alert Type";
             // 
             // ColorBtn
             // 
-            this.ColorBtn.Location = new System.Drawing.Point(166, 517);
-            this.ColorBtn.Margin = new System.Windows.Forms.Padding(4);
+            this.ColorBtn.Location = new System.Drawing.Point(124, 420);
             this.ColorBtn.Name = "ColorBtn";
-            this.ColorBtn.Size = new System.Drawing.Size(100, 28);
+            this.ColorBtn.Size = new System.Drawing.Size(75, 23);
             this.ColorBtn.TabIndex = 13;
             this.ColorBtn.Text = "Select Color";
             this.ColorBtn.UseVisualStyleBackColor = true;
@@ -167,29 +160,26 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(176, 428);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(132, 348);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(80, 17);
+            this.label7.Size = new System.Drawing.Size(62, 13);
             this.label7.TabIndex = 15;
             this.label7.Text = "Effect Type";
             // 
             // EffectType
             // 
             this.EffectType.FormattingEnabled = true;
-            this.EffectType.Location = new System.Drawing.Point(136, 468);
-            this.EffectType.Margin = new System.Windows.Forms.Padding(4);
+            this.EffectType.Location = new System.Drawing.Point(102, 380);
             this.EffectType.Name = "EffectType";
-            this.EffectType.Size = new System.Drawing.Size(160, 24);
+            this.EffectType.Size = new System.Drawing.Size(121, 21);
             this.EffectType.TabIndex = 14;
             this.EffectType.SelectedIndexChanged += new System.EventHandler(this.EffectTypes_SelectedIndexChanged);
             // 
             // SendCommand
             // 
-            this.SendCommand.Location = new System.Drawing.Point(166, 569);
-            this.SendCommand.Margin = new System.Windows.Forms.Padding(4);
+            this.SendCommand.Location = new System.Drawing.Point(124, 462);
             this.SendCommand.Name = "SendCommand";
-            this.SendCommand.Size = new System.Drawing.Size(100, 28);
+            this.SendCommand.Size = new System.Drawing.Size(75, 23);
             this.SendCommand.TabIndex = 16;
             this.SendCommand.Text = "Send Command";
             this.SendCommand.UseVisualStyleBackColor = true;
@@ -198,26 +188,24 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(130, 212);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(98, 172);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(173, 17);
+            this.label3.Size = new System.Drawing.Size(152, 13);
             this.label3.TabIndex = 18;
-            this.label3.Text = "Lights to control (optional)";
+            this.label3.Text = "Lights to (not) control (optional)";
             // 
             // Selected
             // 
-            this.Selected.Location = new System.Drawing.Point(119, 252);
-            this.Selected.Margin = new System.Windows.Forms.Padding(4);
+            this.Selected.Location = new System.Drawing.Point(89, 205);
             this.Selected.Name = "Selected";
-            this.Selected.Size = new System.Drawing.Size(195, 22);
+            this.Selected.Size = new System.Drawing.Size(147, 20);
             this.Selected.TabIndex = 17;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(433, 645);
+            this.ClientSize = new System.Drawing.Size(325, 524);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.Selected);
             this.Controls.Add(this.SendCommand);
@@ -235,7 +223,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Hue Controller";

@@ -103,12 +103,15 @@ namespace Hue_Controller
 
             LightCommand command = new LightCommand
             {
-                On = isLightOn.Checked,
-                Alert = (Alert)AlertType.SelectedItem
+                On = isLightOn.Checked
             };
 
-            if (!((Effect)EffectType.SelectedItem == Effect.ColorLoop)) command.SetColor(new RGBColor(Color.R, Color.G, Color.B));
-            command.Effect = (Effect)EffectType.SelectedItem;
+            if (isLightOn.Checked)
+            {
+                if (!((Effect)EffectType.SelectedItem == Effect.ColorLoop)) command.SetColor(new RGBColor(Color.R, Color.G, Color.B));
+                command.Effect = (Effect)EffectType.SelectedItem;
+                command.Alert = (Alert)AlertType.SelectedItem;
+            }
 
             HueResults result;
             if (string.IsNullOrWhiteSpace(Selected.Text))
@@ -117,25 +120,23 @@ namespace Hue_Controller
             }
             else
             {
-                IEnumerable<Light> lights;
                 if (Selected.Text.Contains("!"))
                 {
-                    lights = await client.GetLightsAsync();
+                    List<string> Lights = new List<string>();
+                    foreach (Light light in await client.GetLightsAsync())
+                        Lights.Add(light.Id);
+
+                    foreach (string light in Selected.Text.Split(' '))
+                        Lights = Lights.Where(x => x != light).ToList();
+
+                    result = await client.SendCommandAsync(command, Lights);
                 }
-                //TODO: actually do it
-                result = await client.SendCommandAsync(command, Selected.Text.Where(x => x.));
+                else result = await client.SendCommandAsync(command, Selected.Text.Split(' '));
+
             }
 
             IEnumerable<DefaultHueResult> Errors = result.Where(x => x.Error != null);
-            if (Errors.Count() != 0)
-            {
-                string errmsg = "Error(s) have occured\n";
-                foreach (DefaultHueResult ErrorResult in Errors)
-                    errmsg += $"{ErrorResult.Error.Address}: {ErrorResult.Error.Description}\n";
-
-                MessageBox.Show(errmsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
+            if (Errors.Count() == 0)
             {
                 MessageBox.Show("Success", "Lights Command", MessageBoxButtons.OK, MessageBoxIcon.None);
                 File.WriteAllText(ConfigFile.FullName, JsonConvert.SerializeObject(new Config()
@@ -147,6 +148,14 @@ namespace Hue_Controller
                     Effect = (Effect)EffectType.SelectedItem,
                     IP = IPBox.Text
                 }));
+            }
+            else
+            {
+                string errmsg = "Error(s) have occured\n";
+                foreach (DefaultHueResult ErrorResult in Errors)
+                    errmsg += $"{ErrorResult.Error.Address}: {ErrorResult.Error.Description}\n";
+
+                MessageBox.Show(errmsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -161,6 +170,22 @@ namespace Hue_Controller
             if (LightFinder.IsDisposed) LightFinder = new LightFinder();
             LightFinder.Show();
             LightFinder.Activate();
+        }
+
+        private void IsLightOn_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isLightOn.Checked)
+            {
+                AlertType.Enabled = false;
+                EffectType.Enabled = false;
+                ColorBtn.Enabled = false;
+            }
+            else
+            {
+                AlertType.Enabled = true;
+                EffectType.Enabled = true;
+                if ((Effect)EffectType.SelectedItem != Effect.ColorLoop) ColorBtn.Enabled = true;
+            }
         }
     }
     public class Config
