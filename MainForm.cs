@@ -128,7 +128,7 @@ namespace Hue_Controller
                         return;
                     }
                     IEnumerable<Light> lights = await client.GetLightsAsync();
-                    string[] requestedIds = Selected.Text.Split(' ');
+                    string[] requestedIds = Selected.Text.TrimStart('!').Split(' ');
                     IEnumerable<Light> requestedLights = lights.Where(l => requestedIds.Contains(l.Id));
                     result = await client.SendCommandAsync(command, requestedLights.Select(l => l.Id).ToArray());
                 }
