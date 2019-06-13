@@ -35,7 +35,12 @@ namespace Hue_Controller
         private void MainForm_Load(object sender, EventArgs e)
         {
             Config cfg = new Config();
-            if (ConfigFile.Exists && JsonConvert.DeserializeObject(File.ReadAllText(ConfigFile.FullName), typeof(Config)) is Config JSON) cfg = JSON;
+
+            if (ConfigFile.Exists)
+            {
+                Config config = JsonConvert.DeserializeObject<Config>(File.ReadAllText(ConfigFile.FullName));
+                if (config != null) cfg = config;
+            }
 
             foreach (object item in Enum.GetValues(typeof(Alert)))
                 AlertType.Items.Add(item);
@@ -142,6 +147,7 @@ namespace Hue_Controller
                 MessageBox.Show("Success", "Lights Command", MessageBoxButtons.OK, MessageBoxIcon.None);
                 File.WriteAllText(ConfigFile.FullName, JsonConvert.SerializeObject(new Config()
                 {
+                    Selected = Selected.Text,
                     On = isLightOn.Checked,
                     Key = KeyBox.Text,
                     Alert = (Alert)AlertType.SelectedItem,
@@ -189,6 +195,7 @@ namespace Hue_Controller
             }
         }
     }
+
     public class Config
     {
         public string IP;
